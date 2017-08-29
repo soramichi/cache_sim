@@ -41,21 +41,19 @@ public:
   
   bool load(unsigned long addr){
     unsigned long line_addr = addr / 64;
-    int target_slot = line_addr & (n_sets - 1);
+    int target_set = line_addr & (n_sets - 1);
     unsigned long tag = line_addr / n_sets;
 
-    //printf("slot: %d, tag: %d\n", target_slot, tag);
-
     for(int i=0; i<way; i++) {
-      if(this->sets[target_slot][i] == tag) {
+      if(this->sets[target_set][i] == tag) {
 	//  <- new   i     -> old
 	// index 0 1 2 3 4 5
 	// data  a b c d e f
 	//   =>  c a b d e f
 	for(int j=i; j>0; j--) {
-	  sets[target_slot][j] = sets[target_slot][j-1];
+	  sets[target_set][j] = sets[target_set][j-1];
 	}
-	sets[target_slot][0] = tag; // bring the hit data to the top
+	sets[target_set][0] = tag; // bring the hit data to the top
 	return true; // hit
       }
     }
@@ -65,9 +63,9 @@ public:
       // index 0 1 2 3 4 5
       // data  a b c d e f
       //   =>  g a b c d e  
-      sets[target_slot][i] = sets[target_slot][i-1];
+      sets[target_set][i] = sets[target_set][i-1];
     }
-    sets[target_slot][0] = tag;
+    sets[target_set][0] = tag;
     return false; // miss
   }
 };
