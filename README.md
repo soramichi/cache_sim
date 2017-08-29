@@ -27,3 +27,7 @@ $ ./cache_sim < input
 n_hit: 3265, n_miss: 78655, sum: 81920
 hit_rate: 0.03986
 ```
+
+# Useful Websites
+http://www.hardwaresecrets.com/how-the-cache-memory-works/8/
+https://www.cs.umd.edu/class/sum2003/cmsc311/Notes/Memory/set.html
